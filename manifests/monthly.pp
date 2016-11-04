@@ -36,9 +36,16 @@
 #       command     => 'find /var/log -type f -ctime +30 -exec rm -f {} \;';
 #   }
 
-define cron::monthly(
-  $command = undef, $minute = 0, $hour = 0, $date = 1, $comment = undef,
-  $environment = [], $user = 'root', $mode = '0644', $ensure = 'present'
+define cron::monthly (
+  String $command                  = undef,
+  Variant[Integer, String] $minute = 0,
+  Variant[Integer, String] $hour   = 0,
+  Variant[Integer, String] $date   = 1,
+  String $comment                  = undef,
+  Array[String] $environment       = [],
+  String $user                     = 'root',
+  Pattern[/[0-7]+/] $mode          = '0644',
+  Enum[present, absent] $ensure    = 'present',
 ) {
   cron::job {
     $title:
@@ -55,4 +62,3 @@ define cron::monthly(
       comment     => $comment,
   }
 }
-

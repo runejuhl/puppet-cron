@@ -36,16 +36,16 @@
 #       command     => 'find /tmp -type f -ctime +7 -exec rm -f {} \;';
 #   }
 
-define cron::weekly(
-  $command     = undef,
-  $minute      = 0,
-  $hour        = 0,
-  $weekday     = 0,
-  $user        = 'root',
-  $mode        = '0644',
-  $ensure      = 'present',
-  $environment = [],
-  $comment,
+define cron::weekly (
+  String $command                   = undef,
+  Variant[Integer, String] $minute  = 0,
+  Variant[Integer, String] $hour    = 0,
+  Variant[Integer, String] $weekday = 0,
+  String $comment                   = undef,
+  Array[String] $environment        = [],
+  String $user                      = 'root',
+  Pattern[/[0-7]+/] $mode           = '0644',
+  Enum[present, absent] $ensure     = 'present',
 ) {
   cron::job {
     $title:

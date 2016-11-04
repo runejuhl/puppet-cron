@@ -29,9 +29,14 @@
 #       environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
 #       command     => 'puppet doc --modulepath /etc/puppet/modules >/var/www/puppet_docs.mkd';
 #   }
-define cron::hourly(
-  $command = undef, $minute = 0, $environment = [], $comment = undef,
-  $user = 'root', $mode = '0644', $ensure = 'present'
+define cron::hourly (
+  String $command                  = undef,
+  Variant[Integer, String] $minute = 0,
+  String $comment                  = undef,
+  Array[String] $environment       = [],
+  String $user                     = 'root',
+  Pattern[/[0-7]+/] $mode          = '0644',
+  Enum[present, absent] $ensure    = 'present',
 ) {
   cron::job {
     $title:
@@ -48,4 +53,3 @@ define cron::hourly(
       comment     => $comment,
   }
 }
-

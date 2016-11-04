@@ -18,11 +18,9 @@ class cron::service {
     default                              => 'cron',
   }
 
-  service {
-    'crond':
-      ensure => 'running',
-      enable => true,
-      name   => $service_name,
+  service {'crond':
+    ensure => 'running',
+    enable => true,
+    name   => $service_name,
   }
 }
-

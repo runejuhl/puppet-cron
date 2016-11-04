@@ -33,9 +33,15 @@
 #       command     => 'mysqldump -u root my_db >/mnt/backups/db/daily/my_db_$(date "+%Y%m%d").sql';
 #   }
 
-define cron::daily(
-  $command = undef, $minute = 0, $hour = 0, $environment = [],
-  $user = 'root', $mode = '0644', $ensure = 'present', $comment = undef,
+define cron::daily (
+  String $command                  = undef,
+  Variant[Integer, String] $minute = 0,
+  Variant[Integer, String] $hour   = 0,
+  String $comment                  = undef,
+  Array[String] $environment       = [],
+  String $user                     = 'root',
+  Pattern[/[0-7]+/] $mode          = '0644',
+  Enum[present, absent] $ensure    = 'present',
 ){
   cron::job {
     $title:
@@ -52,4 +58,3 @@ define cron::daily(
       comment     => $comment,
   }
 }
-
