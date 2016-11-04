@@ -45,6 +45,7 @@ define cron::weekly(
   $mode        = '0644',
   $ensure      = 'present',
   $environment = [],
+  $comment,
 ) {
   cron::job {
     $title:

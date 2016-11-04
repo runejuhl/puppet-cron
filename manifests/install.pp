@@ -14,24 +14,12 @@
 #   Instead, use the *cron* class.
 
 class cron::install (
-  $package_ensure = 'installed'
+  $ensure       = installed,
+  $package_name = cron,
 ) {
-  $package_name = $::operatingsystem ? {
-    /(RedHat|CentOS|Amazon|OracleLinux)/ => $::lsbmajdistrelease ? {
-      5       => 'vixie-cron',
-      default => 'cronie',
-    },
-    'Ubuntu'    => 'cron',
-    'Gentoo'    => 'sys-process/vixie-cron',
-    'Archlinux' => 'cronie',
-    'Fedora'    => 'cronie',
-    default     => 'cron',
-  }
-
   package {
     'cron':
-      ensure => $package_ensure,
+      ensure => $ensure,
       name   => $package_name;
   }
 }
-

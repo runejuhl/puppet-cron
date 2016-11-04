@@ -1,0 +1,2 @@
+---
+cron::install::package_name: sys-process/vixie-cron

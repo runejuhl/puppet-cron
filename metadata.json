@@ -8,6 +8,7 @@
   "project_page": "https://forge.puppetlabs.com/torrancew/cron",
   "issues_url": "https://github.com/torrancew/puppet-cron/issues",
   "tags": ["cron"],
+  "data_provider": "hiera",
   "operatingsystem_support": [
     {
       "operatingsystem":"RedHat",

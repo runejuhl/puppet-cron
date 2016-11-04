@@ -1,22 +1,31 @@
-# Class: cron
+# cron
 #
 # This class wraps *cron::instalL* for ease of use
 #
-# Parameters:
-#   package_ensure - Can be set to a package version, 'latest', 'installed' or 'present'.
+# @param ensure Can be set to a package version, 'latest', 'installed',
+#     'present' or 'absent'.
 #
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
+# @example
 #   include 'cron'
 #   class { 'cron': }
 
 class cron (
-  $package_ensure = 'installed'
+  Variant[String, Enum[latest, installed, present, absent]] $ensure = installed,
 ) {
-  class { '::cron::install': package_ensure => $package_ensure }
-  -> class { 'cron::service': }
-}
+  if $ensure == 'absent' {
+    file { '/etc/cron.d':
+      ensure  => directory,
+      recurse => true,
+      force   => true,
+      replace => true,
+      purge   => true,
+    }
+  } else {
+    class { '::cron::install':
+      ensure => $ensure,
+    }
+    ->
+    class { 'cron::service': }
+  }
 
+}

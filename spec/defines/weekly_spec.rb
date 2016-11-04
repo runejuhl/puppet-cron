@@ -19,10 +19,9 @@ describe 'cron::weekly' do
       'weekday'     => params[:weekday],
       'user'        => params[:user] || 'root',
       'environment' => params[:environment] || [],
-      'mode'        => params[:mode] || '0640',
+      'mode'        => params[:mode] || '0644',
       'command'     => params[:command],
       'comment'     => params[:comment]
     )
   end
 end
-

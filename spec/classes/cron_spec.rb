@@ -7,5 +7,13 @@ describe 'cron' do
     })
     should contain_class( 'cron::service' )
   }
-end
 
+  context 'unclean' do
+    it { should include_class( 'cron::install' ) }
+  end
+
+  context 'absent' do
+    let(:params) { {:ensure => 'absent'} }
+    it { should contain_file( '/etc/cron.d' ) }
+  end
+end
