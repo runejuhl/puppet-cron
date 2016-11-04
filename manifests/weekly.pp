@@ -16,7 +16,7 @@
 #   user - The user the cron job should be executed as.
 #     Defaults to 'root'.
 #   mode - The mode to set on the created job file
-#     Defaults to '0640'.
+#     Defaults to '0644'.
 #   command - The command to execute.
 #     Defaults to undef.
 #
