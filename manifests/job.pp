@@ -38,14 +38,22 @@
 #       command     => 'puppet doc --modulepath /etc/puppet/modules >/var/www/puppet_docs.mkd';
 #   }
 define cron::job(
-  $command = undef, $minute = '*', $hour = '*', $date = '*', $month = '*', $weekday = '*',
-  $environment = [], $user = 'root', $mode = '0644', $ensure = 'present', $comment = undef,
+  String $command                   = undef,
+  Variant[Integer, String] $minute  = '*',
+  Variant[Integer, String] $hour    = '*',
+  Variant[Integer, String] $date    = '*',
+  Variant[Integer, String] $month   = '*',
+  Variant[Integer, String] $weekday = '*',
+  Optional[String] $comment         = undef,
+  Array[String] $environment        = [],
+  String $user                      = 'root',
+  Pattern[/[0-7]+/] $mode           = '0644',
+  Enum[present, absent] $ensure     = 'present',
 ) {
 
-  case $ensure {
-    'present': { $real_ensure = file }
-    'absent':  { $real_ensure = absent }
-    default:   { fail("Invalid value '${ensure}' used for ensure") }
+  $_ensure_file = $ensure ? {
+    'present' => file,
+    'absent' => absent,
   }
 
   if $ensure != 'absent' {
@@ -54,14 +62,19 @@ define cron::job(
     }
   }
 
-  file {
-    "job_${title}":
-      ensure  => $real_ensure,
-      owner   => 'root',
-      group   => 'root',
-      mode    => $mode,
-      path    => "/etc/cron.d/${title}",
-      content => template( 'cron/job.erb' );
+  file {"job_${title}":
+    ensure  => $_ensure_file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => $mode,
+    path    => "/etc/cron.d/puppet_managed_${title}",
+    content => template('cron/job.erb'),
+  }
+
+  # Clean up old cron jobs
+  tidy { 'clean up cron.d':
+    path    => '/etc/cron.d',
+    matches => ['puppet_managed_*'],
+    recurse => 1,
   }
 }
-
