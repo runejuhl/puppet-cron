@@ -41,7 +41,7 @@ define cron::monthly (
   Variant[Integer, String] $minute = 0,
   Variant[Integer, String] $hour   = 0,
   Variant[Integer, String] $date   = 1,
-  String $comment                  = undef,
+  Optional[String] $comment        = undef,
   Array[String] $environment       = [],
   String $user                     = 'root',
   Pattern[/[0-7]+/] $mode          = '0644',
