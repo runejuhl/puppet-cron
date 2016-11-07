@@ -1,5 +1,10 @@
 # Puppet Cron Module
 
+## IMPORTANT ##
+
+Currently this is a work in progress. Feel free to clone and submit PRs, but
+don't expect too much right now. That is all.
+
 ## Build Status:
 
   * **master:** [![master branch status](https://secure.travis-ci.org/torrancew/puppet-cron.png?branch=master)](http://travis-ci.org/torrancew/puppet-cron)
@@ -166,7 +171,7 @@ Example:
 ## Contributors:
 
   * Kevin Goess (@kgoess)               - Environment variable support + fixes
-  * Andy Shinn (@andyshinn)             - RedHat derivatives package name fix 
+  * Andy Shinn (@andyshinn)             - RedHat derivatives package name fix
   * Chris Weyl (@RsrchBoy)              - Fixed Puppet 3.2 deprecation warnings
   * Mathew Archibald (@mattyindustries) - Fixed file ownership issues
   * Nathan Sullivan (@CpuID)            - Support for specifying package version
@@ -176,4 +181,3 @@ Example:
 
   * <del>Add PuppetDoc markup to manifests</del>
   * <del>Add a Modulefile, upload to the Puppet Forge</del>
-
