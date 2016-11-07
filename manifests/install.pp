@@ -15,8 +15,9 @@
 
 class cron::install (
   $ensure       = installed,
-  $package_name = cron,
+  String $package_name = undef,
 ) {
+
   package {
     'cron':
       ensure => $ensure,
